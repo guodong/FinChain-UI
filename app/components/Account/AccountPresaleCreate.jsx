@@ -141,7 +141,7 @@ class AccountPresaleCreate extends React.Component {
         let args = {
             issuer: ChainStore.getAccount(AccountStore.getState().currentAccount).get("id"),
             asset_id: this.props.asset.get("id"),
-            amount: this.state.amount,
+            amount: this.state.amount * Math.pow(10, this.props.asset.get("precision")),
             start: this.state.start,
             stop: this.state.stop,
             accepts: this.state.accepts,
@@ -379,7 +379,7 @@ class AccountPresaleCreate extends React.Component {
 
         let unlock_type_options = [
             <option key={0} value="0"><Translate content="presale.lockmode_liner"/></option>,
-            <option key={1} value="1"><Translate content="lockmode_deadline"/></option>
+            <option key={1} value="1"><Translate content="presale.lockmode_deadline"/></option>
         ];
 
         let early_bird_percents_sec = [];
