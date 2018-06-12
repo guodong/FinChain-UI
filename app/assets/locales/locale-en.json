@@ -519,7 +519,11 @@
     "override_transfer": "{issuer} transferred {amount} from {from} to {to}",
     "lock_balance": "{issuer} 锁定 {amount} {period} 天",
     "unlock_balance": "{issuer} 解锁到期存币",
-    "unlock_balance_unexpired": "{issuer} 解锁未到期存币"
+    "unlock_balance_unexpired": "{issuer} 解锁未到期存币",
+    "donation_balance":"捐赠{amount}{asset}到资金池",
+    "asset_presale_create":"发起资产{asset}众筹",
+    "asset_presale_buy":"参与{amount}",
+    "asset_presale_claim":"领取众筹{amount}"
   },
   "proposal": {
     "transfer": "Transfer {amount} from {from} to {to}",
@@ -663,7 +667,12 @@
       "transfer_from_blind": "Transfer from blinded account",
       "asset_claim_fees": "Claim asset fees",
       "lock_balance":"锁定",
-      "unlock_balance":  "解锁"
+      "unlock_balance":  "解锁",
+      "donation_balance":"捐赠",
+      "asset_presale_create":"发起众筹",
+      "asset_presale_buy":"参与众筹",
+      "asset_presale_claim":"领取众筹",
+      "all": "Show all"
     },
     "feeGroups": {
       "general": "General",
@@ -768,8 +777,7 @@
         "current_supply": "Current supply",
         "stealth_supply": "Stealth supply",
         "market_fee": "Market fee",
-        "max_market_fee": "Max market fee",
-        "locked_balance":"锁定余额"
+        "max_market_fee": "Max market fee"
       },
       "price_feed": {
         "title": "Price Feed",
@@ -1391,5 +1399,36 @@
   },
     "trx_error": {
         "expire": "Your transaction has expired without being confirmed, please try again later."
-    }
+    },
+  "presale": {
+    "add_accept": "Add accept asset",
+    "amount": "Amount",
+    "buy": "Buy",
+    "buy_history": "History",
+    "buy_time": "Time",
+    "bought": "My bought presales",
+    "claimed": "Claimed balance",
+    "create": "Create presale",
+    "delete": "delete",
+    "history": "Presales",
+    "mode": {
+      "title": "Presale mode",
+      "per": "Per asset mode",
+      "total": "Total mode"
+    },
+    "perprice": "Price",
+    "minbuy": "Min bought",
+    "maxbuy": "Max bought",
+    "mintotal": "Total least",
+    "maxtotal": "Total most",
+    "lockmode": "Unfreeze mode",
+    "lockmode_none": "0 locked",
+    "lockmode_liner": "Liner mode",
+    "lockmode_deadline": "Deadline mode",
+    "early_bird": "Early bird plan",
+    "lock_period": "Lock period",
+    "odd": "Odd",
+    "total": "Total amount",
+    "cancle": "Cancle"
+  }
 }

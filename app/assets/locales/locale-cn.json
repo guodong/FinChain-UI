@@ -465,7 +465,11 @@
     "override_transfer": "{issuer} 从 {from} 到 {to} 发送 {amount} ",
     "lock_balance": "{issuer} 锁定 {amount} {period} 天",
     "unlock_balance": "{issuer} 解锁到期存币",
-    "unlock_balance_unexpired": "{issuer} 解锁未到期存币"
+    "unlock_balance_unexpired": "{issuer} 解锁未到期存币",
+    "donation_balance":"捐赠{amount}{asset}到资金池",
+    "asset_presale_create":"发起资产{asset}众筹",
+    "asset_presale_buy":"参与{amount}",
+    "asset_presale_claim":"领取众筹{amount}"
   },
   "transaction": {
     "sent": "发送",
@@ -581,6 +585,10 @@
       "asset_claim_fees": "领取资产手续费",
       "lock_balance":"锁定",
       "unlock_balance":  "解锁" ,
+      "donation_balance":"捐赠",
+      "asset_presale_create":"发起众筹",
+      "asset_presale_buy":"参与众筹",
+      "asset_presale_claim":"领取众筹",
       "all": "Show all"
     },
     "confirm": "请确认交易",
@@ -718,8 +726,7 @@
         "current_supply": "当前供给",
         "stealth_supply": "隐私供给",
         "market_fee": "交易市场费率",
-        "max_market_fee": "交易市场手续费上限",
-        "locked_balance":"锁定余额"
+        "max_market_fee": "交易市场手续费上限"
       },
       "price_feed": {
         "settlement_price": "喂价",
@@ -1319,5 +1326,36 @@
   },
     "trx_error": {
       "expire": "Your transaction has expired without being confirmed, please try again later."
-    }
+    },
+  "presale": {
+    "add_accept": "添加接受资产类型",
+    "amount": "数量",
+    "buy": "参与众筹",
+    "buy_history": "参与记录",
+    "buy_time": "参与时间",
+    "bought": "我参与的众筹",
+    "claimed": "已认领数量",
+    "create": "发起众筹",
+    "delete": "删除",
+    "history": "众筹列表",
+    "mode": {
+      "title": "众筹模式",
+      "per": "单价模式",
+      "total": "总价模式"
+    },
+    "perprice": "单币价格",
+    "minbuy": "最低购买数量",
+    "maxbuy": "最高购买数量",
+    "mintotal": "最低总价",
+    "maxtotal": "最高总价",
+    "lockmode": "解冻方式",
+    "lockmode_none": "0锁定",
+    "lockmode_liner": "线性解冻",
+    "lockmode_deadline": "到期解冻",
+    "early_bird": "早鸟计划",
+    "lock_period": "锁定期限",
+    "odd": "比率",
+    "total": "总量",
+    "cancle": "取消"
+  }
 }
