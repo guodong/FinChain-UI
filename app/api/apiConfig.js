@@ -18,6 +18,7 @@ export const rudexAPIs = {
 export const settingsAPIs = {
     DEFAULT_WS_NODE: "wss://fake.automatic-selection.com",
     WS_NODE_LIST: [
+      {url: "ws://reg64:9090", location: "local"},
         {url: "ws://47.97.8.71:9090", location: "上海／ShangHai"},
         {url: "ws://47.95.22.107:9090", location: "北京／BeiJing"},
         {url: "ws://119.23.163.232:9090", location: "广州／GuangZhou"},

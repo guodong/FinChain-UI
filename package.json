@@ -124,7 +124,7 @@
     "alt-container": "^1.0.0",
     "alt-react": "0.0.1",
     "bignumber.js": "^4.0.0",
-    "bitsharesjs": "https://github.com/FinanceChainFoundation/Fin-Chainjs.git#b4e915d46e41c155a9e324caf5b203c32d1f9c79 ",
+    "bitsharesjs": "https://github.com/FinanceChainFoundation/Fin-Chainjs.git#c2beac73798b97a48e2b357fd23b533cf6b7f513",
     "browser-locale": "^1.0.3",
     "classnames": "^2.2.1",
     "cookies-js": "^1.2.1",

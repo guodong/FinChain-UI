@@ -49,6 +49,7 @@ import LoginSelector from "./components/LoginSelector";
 import CreateWorker from "./components/Account/CreateWorker";
 import LockAsset from "./components/LockBalance/LockAsset";
 import MassTransfer from "./components/advance/MassTransfer";
+import AccountPresaleCreate from "./components/Account/AccountPresaleCreate";
 
 const history = __HASH_HISTORY__ ? hashHistory : browserHistory;
 
@@ -120,6 +121,8 @@ const routes = (
             <Route path="deposit-withdraw" component={AccountDepositWithdraw} />
             <Route path="orders" component={AccountOrders} />
             <Route path="whitelist" component={AccountWhitelist} />
+            <Route path="assets/:asset/presales/create" component={AccountPresaleCreate}/>
+
             <Redirect from="overview" to="dashboard" />
         </Route>
 
