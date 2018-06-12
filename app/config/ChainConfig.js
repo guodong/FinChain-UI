@@ -13,7 +13,7 @@ _this = {
         JRC: {
             core_asset: "JRC",
             address_prefix: "JRC",
-            chain_id: "4018d7844c78f6a6c41c6a552b898022310fc5dec06da467ee7905a8dad512c8"
+            chain_id: "ec9b3651255bd1b4e30574da98af6eaf1612df6b498de610e15f13ff8b5da5fd"
         }
     },
 };
