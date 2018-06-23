@@ -1206,9 +1206,9 @@ bindings@^1.3.0:
     babel-preset-stage-1 "^6.16.0"
     ws "^2.2.0"
 
-"bitsharesjs@https://github.com/FinanceChainFoundation/Fin-Chainjs.git#c2beac73798b97a48e2b357fd23b533cf6b7f513":
+"bitsharesjs@git+https://github.com/FinanceChainFoundation/Fin-Chainjs.git#625ffc4f10e3971e74c82f10da536a9e091847aa":
   version "1.4.1"
-  resolved "https://github.com/FinanceChainFoundation/Fin-Chainjs.git#c2beac73798b97a48e2b357fd23b533cf6b7f513"
+  resolved "git+https://github.com/FinanceChainFoundation/Fin-Chainjs.git#625ffc4f10e3971e74c82f10da536a9e091847aa"
   dependencies:
     babel-plugin-add-module-exports "^0.2.1"
     babel-preset-es2015 "^6.18.0"
@@ -6647,6 +6647,12 @@ react-proxy@^3.0.0-alpha.0:
   resolved "https://registry.yarnpkg.com/react-proxy/-/react-proxy-3.0.0-alpha.1.tgz#4400426bcfa80caa6724c7755695315209fa4b07"
   dependencies:
     lodash "^4.6.1"
+
+react-radio-group@^3.0.2:
+  version "3.0.3"
+  resolved "https://registry.yarnpkg.com/react-radio-group/-/react-radio-group-3.0.3.tgz#60bb29c7ad05d8b6f67cf443af0767ee2007cf98"
+  dependencies:
+    prop-types "^15.5.8"
 
 react-responsive-mixin@^0.4.0:
   version "0.4.0"
