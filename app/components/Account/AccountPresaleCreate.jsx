@@ -149,7 +149,7 @@ class AccountPresaleCreate extends React.Component {
             amount: this.state.amount * Math.pow(10, this.props.asset.get("precision")),
             start: new Date(this.state.start),
             stop: new Date(this.state.stop),
-            early_bird_part: this.state.early_bird_part,
+            early_bird_part: this.state.early_bird_part * Math.pow(10, this.props.asset.get("precision")),
             asset_of_top: this.state.asset_of_top,
             soft_top: this.state.soft_top * Math.pow(10, ChainStore.getObject(this.state.asset_of_top).get("precision")),
             hard_top: this.state.hard_top * Math.pow(10, ChainStore.getObject(this.state.asset_of_top).get("precision")),
@@ -163,9 +163,9 @@ class AccountPresaleCreate extends React.Component {
         this.state.accepts.forEach(a => {
             accepts.push({
                 asset_id: a.asset_id,
-                base_price: a.base_price,
-                least: a.least,
-                most: a.most,
+                base_price: a.base_price * 1000000000000,
+                least: a.least * Math.pow(10, ChainStore.getObject(a.asset_id).get("precision")),
+                most: a.most * Math.pow(10, ChainStore.getObject(a.asset_id).get("precision")),
                 amount: a.amount * Math.pow(10, this.props.asset.get("precision"))
             });
         });
