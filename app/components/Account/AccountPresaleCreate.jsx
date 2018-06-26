@@ -36,20 +36,19 @@ class AccountPresaleCreate extends React.Component {
             asset: null,
             accept_id: "1.3.0",
             assetsFetched: 0,
-            total_mode_asset_id: "1.3.0",
-            total_mode_asset: null,
             idx: 0,
 
             amount: "",
-            start: new Date(),
-            stop: new Date(),
+            start: new Date().toISOString().substr(0,19),
+            stop: new Date().toISOString().substr(0,19),
             mode: 0,
+            asset_of_top: "",
             soft_top: 0,
             hard_top: 0,
             asset_of_top_base_price: 0,
             accepts: [],
             unlock_type: 0,
-            lock_period: 0,
+            lock_period: new Date().toISOString().substr(0,19),
             early_bird_part: 0,
             early_bird_pecents: [] // format to object on submit
         };
@@ -62,33 +61,21 @@ class AccountPresaleCreate extends React.Component {
     }
 
     onEarlyChanged({amount}) {
-        this.setState({early_bird_part: amount})
+        this.setState({early_bird_part: amount});
     }
 
     onSoftTopChanged({amount, asset}) {
         if (!asset) {
             return;
         }
-        let accepts = this.state.accepts;
-        accepts[0].asset_id = asset.get("id");
-        accepts[0].soft_top = amount * 1;
-        this.setState({accepts});
-        //this.state.accepts = [];
-        //this.setState({soft_top: amount, total_mode_asset: asset, total_mode_asset_id: asset.get("id"), accept_id: asset.get("id")});
-        //this.addAccept();
+        this.setState({soft_top: amount * 1});
     }
 
     onHardTopChanged({amount, asset}) {
         if (!asset) {
             return;
         }
-        let accepts = this.state.accepts;
-        accepts[0].asset_id = asset.get("id");
-        accepts[0].hard_top = amount * 1;
-        this.setState({accepts});
-        //this.state.accepts = [];
-        //this.setState({hard_top: amount, total_mode_asset: asset, total_mode_asset_id: asset.get("id"), accept_id: asset.get("id")});
-        //this.addAccept();
+        this.setState({hard_top: amount * 1});
     }
 
     addAccept() {
@@ -101,12 +88,10 @@ class AccountPresaleCreate extends React.Component {
         accepts.push({
             asset_id: this.state.accept_id,
             symbol: ChainStore.getAsset(this.state.accept_id).get("symbol"),
+            base_price: 1,
             amount: 1,
             least: 1,
             most: 1,
-            soft_top: 0,
-            hard_top: 0,
-            base_price: 1
         });
         this.setState({accepts: accepts});
     }
@@ -162,36 +147,44 @@ class AccountPresaleCreate extends React.Component {
             issuer: ChainStore.getAccount(AccountStore.getState().currentAccount).get("id"),
             asset_id: this.props.asset.get("id"),
             amount: this.state.amount * Math.pow(10, this.props.asset.get("precision")),
-            start: this.state.start,
-            stop: this.state.stop,
-            accepts: this.state.accepts,
+            start: new Date(this.state.start),
+            stop: new Date(this.state.stop),
             early_bird_part: this.state.early_bird_part,
-            asset_of_top: this.state.total_mode_asset_id,
-            asset_of_top_base_price: this.state.asset_of_top_base_price,
-            soft_top: this.state.soft_top * Math.pow(10, ChainStore.getObject(this.state.total_mode_asset_id).get("precision")),
-            hard_top: this.state.hard_top * Math.pow(10, ChainStore.getObject(this.state.total_mode_asset_id).get("precision")),
-            early_bird_pecents: this.state.early_bird_pecents,
-            lock_period: this.state.lock_period.getTime() / 1000,
+            asset_of_top: this.state.asset_of_top,
+            soft_top: this.state.soft_top * Math.pow(10, ChainStore.getObject(this.state.asset_of_top).get("precision")),
+            hard_top: this.state.hard_top * Math.pow(10, ChainStore.getObject(this.state.asset_of_top).get("precision")),
+            lock_period: (new Date(this.state.lock_period).getTime() - new Date(this.state.stop).getTime()) / 1000,
             unlock_type: this.state.unlock_type,
             mode: parseInt(this.state.mode)
         };
 
-        args.accepts.forEach(a => {
-            a.amount *= Math.pow(10, this.props.asset.get("precision"));
-        })
+        let accepts = [];
+
+        this.state.accepts.forEach(a => {
+            accepts.push({
+              asset_id: a.asset_id,
+              base_price: a.base_price,
+              least: a.least,
+              most: a.most,
+              amount: a.amount * Math.pow(10, this.props.asset.get("precision"))
+            });
+        });
+
+        args.accepts = accepts;
 
         var ebps = [];
         this.state.early_bird_pecents.forEach(p => {
-            ebps.push({
-                time: p.time,
-                percent: p.odd * 1
-            });
-            // let t = p.time.getTime() / 1000;
-            // ebp[t] = p.odd * 1;
+            // ebps.push({
+            //     time: p.time,
+            //     percent: p.odd * 1
+            // });
+            let t = new Date(p.time).getTime() / 1000;
+            //ebps[t] = p.odd * 1;
+            ebps.push([t, p.odd * 1]);
         });
         args.early_bird_pecents = ebps;
         console.log(args);
-        //return;
+        // return;
 
         PresaleActions.createPresale(args);
     }
@@ -227,8 +220,7 @@ class AccountPresaleCreate extends React.Component {
         }
     }
 
-    changeBasePrice(act) {
-
+    changeBasePrice(act, e) {
         this.state.accepts.forEach(accept => {
             if (accept == act) {
                 accept.base_price = e.target.value;
@@ -240,7 +232,7 @@ class AccountPresaleCreate extends React.Component {
     addEarly() {
         let old = this.state.early_bird_pecents;
         old.push({
-            time: new Date(),
+            time: new Date().toISOString().substr(0,19),
             odd: 1
         });
         this.setState({early_bird_pecents: old});
@@ -261,7 +253,7 @@ class AccountPresaleCreate extends React.Component {
         let old = this.state.early_bird_pecents;
         for (var i in old) {
             if (old[i] == idx) {
-                old[i].time = new Date(e.target.value);
+                old[i].time = e.target.value;
                 break;
             }
         }
@@ -344,105 +336,49 @@ class AccountPresaleCreate extends React.Component {
       return accepts_part;
     }
 
+    _renderAssetOfTop() {
+        let asset_id = this.state.accepts.length === 1 ? this.state.accepts[0].asset_id : this.props.asset.get("id");
+        this.state.asset_of_top = asset_id;
+        return (
+          <table className="table">
+            <thead>
+            <th><Translate content="presale.mintotal"/></th>
+            <th><Translate content="presale.maxtotal"/></th>
+            </thead>
+            <tbody>
+            <tr>
+              <td>
+                <AmountSelector
+                  style={{width: "100%"}}
+                  amount={this.state.soft_top}
+                  onChange={this.onSoftTopChanged.bind(this)}
+                  asset={asset_id}
+                  assets={[asset_id]}
+                  placeholder="0.00"
+                />
+              </td>
+              <td>
+                <AmountSelector
+                  amount={this.state.hard_top}
+                  onChange={this.onHardTopChanged.bind(this)}
+                  asset={asset_id}
+                  assets={[asset_id]}
+                  placeholder="0.00"
+                />
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        );
+    }
+
     render() {
-
-
 
         let supports = this.props.assets.filter(ast => {
             return ast.id != this.props.asset.get("id");
         }).map(ast => {
             return <option key={ast.id} value={ast.id}>{ast.symbol}</option>
         })
-
-        let modesection;
-
-        if (this.state.mode == 0) {
-            modesection = (
-                <label>
-                    <select style={{width: "30%", display: "inline-block", marginRight: "30px", height: "40px"}} value={this.state.accept_id} onChange={this.supportChange.bind(this)}>
-                        {supports}
-                    </select>
-                    <button className="button outline" style={{display: "inline-block"}} onClick={this.addAccept.bind(this)}><Translate content="presale.add_accept"/></button>
-                    {this.state.accepts.length ?
-                        <table className="table">
-                            <thead>
-                            <tr>
-                                <th><Translate content="explorer.assets.title"/></th>
-                                <th><Translate content="presale.total"/></th>
-                                <th><Translate content="presale.perprice"/></th>
-                                <th><Translate content="presale.minbuy"/></th>
-                                <th><Translate content="presale.maxbuy"/></th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {this.renderAccepts()}
-                            </tbody>
-                        </table>
-                        :
-                        null
-                    }
-                </label>
-            );
-        } else {
-
-            let ids = [];
-            this.props.assets.forEach(ast => {
-                if (ast.id != this.props.asset.get("id")) {
-                    ids.push(ast.id)
-                }
-            })
-
-            modesection = (
-                <div style={{marginBottom: "20px"}}>
-                    <table className="table">
-                        <thead>
-                        <th><Translate content="presale.perprice"/></th>
-                        <th><Translate content="presale.mintotal"/></th>
-                        <th><Translate content="presale.maxtotal"/></th>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>
-                                <div className="grid-block no-padding buy-sell-row" style={{margin: "12px 0 0 0"}}>
-                                    <div className="grid-block no-margin no-overflow buy-sell-input" style={{width: "40px"}}>
-                                        <ExchangeInput style={{height: "40px"}} value={this.state.accepts[0].base_price} onChange={this.changeAOTBasePrice.bind(this)} autoComplete="off" placeholder="0.0" />
-                                    </div>
-                                    <div className="grid-block no-margin no-overflow buy-sell-box" style={{height: "40px", lineHeight: "40px"}}>
-                                        <AssetName dataPlace="right" name={ChainStore.getObject(this.state.accepts[0].asset_id).get("symbol")} />
-                                        &nbsp;/&nbsp;
-                                        <AssetName dataPlace="right" name={this.props.asset.get("symbol")} />
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                    <AmountSelector
-                                        style={{width: "100%"}}
-                                        amount={this.state.accepts[0].soft_top}
-                                        onChange={this.onSoftTopChanged.bind(this)}
-                                        asset={this.state.accepts[0].asset_id}
-                                        assets={ids}
-                                        placeholder="0.00"
-                                    />
-                            </td>
-                            <td>
-                                    <AmountSelector
-                                        amount={this.state.accepts[0].hard_top}
-                                        onChange={this.onHardTopChanged.bind(this)}
-                                        asset={this.state.accepts[0].asset_id}
-                                        assets={ids}
-                                        placeholder="0.00"
-                                    />
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-
-
-
-                </div>
-            );
-        };
 
 
         let unlock_type_options = [
@@ -454,8 +390,8 @@ class AccountPresaleCreate extends React.Component {
         this.state.early_bird_pecents.forEach(p => {
             var node = (
                 <tr key={p.time}>
+                    <td><input value={p.time} onChange={this.onChangeEarlyTime.bind(this, p)} type="datetime-local" step={1}/></td>
                     <td><input value={p.odd} type="text" onChange={this.onChangeEarlyOdd.bind(this, p)}/></td>
-                    <td><input onChange={this.onChangeEarlyTime.bind(this, p)} type="datetime-local" step={1}/></td>
                     <td><button className="button outline" onClick={this.removeEarly.bind(this, p)}><Translate content="presale.delete"/></button></td>
                 </tr>
             );
@@ -477,13 +413,13 @@ class AccountPresaleCreate extends React.Component {
                     <label style={{width: "50%", paddingRight: "2.5%", display: "inline-block"}}>
                         <label>
                             <Translate content="account.votes.start" />
-                            <input onChange={(e) => {this.setState({start: new Date(e.target.value)});}} type="datetime-local" step={1}></input>
+                            <input value={this.state.start} onChange={(e) => {this.setState({start: e.target.value});console.log(e.target.value)}} type="datetime-local" step={1}></input>
                         </label>
                     </label>
                     <label style={{width: "50%", paddingLeft: "2.5%", display: "inline-block"}}>
                         <label>
                             <Translate content="account.votes.end" />
-                            <input onChange={(e) => {this.setState({stop: new Date(e.target.value)});}} type="datetime-local" step={1}></input>
+                            <input value={this.state.stop} onChange={(e) => {this.setState({stop: e.target.value});}} type="datetime-local" step={1}></input>
                         </label>
                     </label>
 
@@ -500,15 +436,41 @@ class AccountPresaleCreate extends React.Component {
                             <input type="radio" name="mode"
                                    value="1"
                                    checked={this.state.mode == 1}
-                                   onChange={e => {this.setState({mode: e.currentTarget.value, accepts: [{asset_id: "1.3.0", base_price: 1, least: 0, most: 0, soft_top: 0, hard_top: 0}]})}} /><Translate content="presale.mode.total"/>
+                                   onChange={e => {this.setState({mode: e.currentTarget.value, accepts: []})}} /><Translate content="presale.mode.total"/>
                         </label>
                     </div>
 
-                    {modesection}
+                    <div>
+                      <select style={{width: "30%", display: "inline-block", marginRight: "30px", height: "40px"}} value={this.state.accept_id} onChange={this.supportChange.bind(this)}>
+                        {supports}
+                      </select>
+                      <button className="button outline" style={{display: "inline-block"}} onClick={this.addAccept.bind(this)}><Translate content="presale.add_accept"/></button>
+                      {this.state.accepts.length ?
+                        <table className="table">
+                          <thead>
+                          <tr>
+                            <th><Translate content="explorer.assets.title"/></th>
+                            <th><Translate content="presale.total"/></th>
+                            <th><Translate content="presale.perprice"/></th>
+                            <th><Translate content="presale.minbuy"/></th>
+                            <th><Translate content="presale.maxbuy"/></th>
+                            <th></th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          {this.renderAccepts()}
+                          </tbody>
+                        </table>
+                        :
+                        null
+                      }
+                    </div>
+
+                    {this._renderAssetOfTop()}
 
                     <label style={{width: "50%"}}>
                         <Translate content="presale.lock_period"/>
-                        <input onChange={e => {this.setState({lock_period: new Date(e.target.value)})}} type="datetime-local" step={1}/>
+                        <input value={this.state.lock_period} onChange={e => {this.setState({lock_period: e.target.value})}} type="datetime-local" step={1}/>
                     </label>
 
                     <label style={{marginTop: "20px"}}>
@@ -526,8 +488,8 @@ class AccountPresaleCreate extends React.Component {
                         <table className="table">
                             <thead>
                             <tr>
-                                <th><Translate content="presale.odd"/></th>
                                 <th><Translate content="explorer.block.time"/></th>
+                                <th><Translate content="presale.odd"/></th>
                                 <th></th>
                             </tr>
                             </thead>
