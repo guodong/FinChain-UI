@@ -1206,30 +1206,9 @@ bindings@^1.3.0:
     babel-preset-stage-1 "^6.16.0"
     ws "^2.2.0"
 
-"bitsharesjs@git+https://github.com/FinanceChainFoundation/Fin-Chainjs.git#c2beac73798b97a48e2b357fd23b533cf6b7f513":
+"bitsharesjs@https://github.com/guodong/bitsharesjs.git#13a7724aa7748ff12e83ee6e91d4f5f6594e97bf":
   version "1.4.1"
-  resolved "git+https://github.com/FinanceChainFoundation/Fin-Chainjs.git#c2beac73798b97a48e2b357fd23b533cf6b7f513"
-  dependencies:
-    babel-plugin-add-module-exports "^0.2.1"
-    babel-preset-es2015 "^6.18.0"
-    babel-preset-stage-1 "^6.16.0"
-    bigi "^1.4.2"
-    bitsharesjs-ws "git+https://github.com/FinanceChainFoundation/bitsharesjs-ws.git#6baf1c9e028ca545620996fa23056ed5973b2069"
-    bs58 "^4.0.1"
-    bytebuffer "^5.0.1"
-    create-hash "^1.1.3"
-    create-hmac "^1.1.6"
-    crypto-js "^3.1.9-1"
-    deep-equal "^1.0.1"
-    ecurve "^1.0.5"
-    event-emitter "^0.3.4"
-    immutable "^3.8.1"
-    secure-random "^1.1.1"
-
-"bitsharesjs@https://github.com/FinanceChainFoundation/Fin-Chainjs.git#c2beac73798b97a48e2b357fd23b533cf6b7f513":
-  version "1.4.1"
-  uid c2beac73798b97a48e2b357fd23b533cf6b7f513
-  resolved "https://github.com/FinanceChainFoundation/Fin-Chainjs.git#c2beac73798b97a48e2b357fd23b533cf6b7f513"
+  resolved "https://github.com/guodong/bitsharesjs.git#13a7724aa7748ff12e83ee6e91d4f5f6594e97bf"
   dependencies:
     babel-plugin-add-module-exports "^0.2.1"
     babel-preset-es2015 "^6.18.0"

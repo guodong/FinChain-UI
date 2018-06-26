@@ -162,11 +162,11 @@ class AccountPresaleCreate extends React.Component {
 
         this.state.accepts.forEach(a => {
             accepts.push({
-              asset_id: a.asset_id,
-              base_price: a.base_price,
-              least: a.least,
-              most: a.most,
-              amount: a.amount * Math.pow(10, this.props.asset.get("precision"))
+                asset_id: a.asset_id,
+                base_price: a.base_price,
+                least: a.least,
+                most: a.most,
+                amount: a.amount * Math.pow(10, this.props.asset.get("precision"))
             });
         });
 
@@ -174,13 +174,13 @@ class AccountPresaleCreate extends React.Component {
 
         var ebps = [];
         this.state.early_bird_pecents.forEach(p => {
-            // ebps.push({
-            //     time: p.time,
-            //     percent: p.odd * 1
-            // });
-            let t = new Date(p.time).getTime() / 1000;
+            ebps.push({
+                time: new Date(p.time),
+                percent: p.odd * 10000 /** percentage fields are fixed point with a denominator of 10,000 */
+            });
+            //let t = new Date(p.time).getTime() / 1000;
             //ebps[t] = p.odd * 1;
-            ebps.push([t, p.odd * 1]);
+            //ebps.push([t, p.odd * 1]);
         });
         args.early_bird_pecents = ebps;
         console.log(args);
@@ -282,93 +282,93 @@ class AccountPresaleCreate extends React.Component {
     }
 
     renderAccepts() {
-      let accepts_part = this.state.accepts.map(accept => {
-        return (
-          <tr key={accept.asset_id}>
-            <td>{accept.symbol}</td>
-            <td>
+        let accepts_part = this.state.accepts.map(accept => {
+            return (
+                <tr key={accept.asset_id}>
+                    <td>{accept.symbol}</td>
+                    <td>
 
-              <div className="grid-block buy-sell-row" style={{margin: 0}}>
-                <div className="grid-block no-margin no-overflow buy-sell-input" style={{width: "50px"}}>
-                  <ExchangeInput value={accept.amount} onChange={this.changeAcceptAmount.bind(this, accept)} autoComplete="off" placeholder="0" />
-                </div>
-                <div className="grid-block no-margin no-overflow buy-sell-box" style={{width: "20px"}}>
-                  <AssetName dataPlace="right" name={this.props.asset.get("symbol")} />
-                </div>
-              </div>
-            </td>
-            <td>
-              <div className="grid-block no-padding buy-sell-row" style={{margin: 0}}>
-                <div className="grid-block no-margin no-overflow buy-sell-input" style={{width: "40px"}}>
-                  <ExchangeInput value={accept.base_price} onChange={this.changeBasePrice.bind(this, accept)} autoComplete="off" placeholder="0.0" />
-                </div>
-                <div className="grid-block no-margin no-overflow buy-sell-box">
-                  <AssetName dataPlace="right" name={accept.symbol} />
-                  &nbsp;/&nbsp;
-                  <AssetName dataPlace="right" name={this.props.asset.get("symbol")} />
-                </div>
-              </div>
-            </td>
-            <td>
-              <div className="grid-block no-padding buy-sell-row" style={{margin: 0}}>
-                <div className="grid-block no-margin no-overflow buy-sell-input" style={{width: "40px"}}>
-                  <ExchangeInput value={accept.least} onChange={this.changeAcceptLeast.bind(this, accept)} placeholder="0" />
-                </div>
-                <div className="grid-block no-margin no-overflow buy-sell-box" style={{width: "20px"}}>
-                  <AssetName dataPlace="right" name={accept.symbol} />
-                </div>
-              </div>
-            </td>
-            <td>
-              <div className="grid-block no-padding buy-sell-row" style={{margin: 0}}>
-                <div className="grid-block no-margin no-overflow buy-sell-input" style={{width: "40px"}}>
-                  <ExchangeInput value={accept.most} onChange={this.changeAcceptMost.bind(this, accept)} placeholder="0" />
-                </div>
-                <div className="grid-block no-margin no-overflow buy-sell-box" style={{width: "20px"}}>
-                  <AssetName dataPlace="right" name={accept.symbol} />
-                </div>
-              </div>
-            </td>
-            <td><button className="button outline" onClick={this.removeAccept.bind(this, accept.id)}><Translate content="presale.delete"/></button></td>
-          </tr>
-        );
-      });
-      return accepts_part;
+                        <div className="grid-block buy-sell-row" style={{margin: 0}}>
+                            <div className="grid-block no-margin no-overflow buy-sell-input" style={{width: "50px"}}>
+                                <ExchangeInput value={accept.amount} onChange={this.changeAcceptAmount.bind(this, accept)} autoComplete="off" placeholder="0" />
+                            </div>
+                            <div className="grid-block no-margin no-overflow buy-sell-box" style={{width: "20px"}}>
+                                <AssetName dataPlace="right" name={this.props.asset.get("symbol")} />
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div className="grid-block no-padding buy-sell-row" style={{margin: 0}}>
+                            <div className="grid-block no-margin no-overflow buy-sell-input" style={{width: "40px"}}>
+                                <ExchangeInput value={accept.base_price} onChange={this.changeBasePrice.bind(this, accept)} autoComplete="off" placeholder="0.0" />
+                            </div>
+                            <div className="grid-block no-margin no-overflow buy-sell-box">
+                                <AssetName dataPlace="right" name={accept.symbol} />
+                                &nbsp;/&nbsp;
+                                <AssetName dataPlace="right" name={this.props.asset.get("symbol")} />
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div className="grid-block no-padding buy-sell-row" style={{margin: 0}}>
+                            <div className="grid-block no-margin no-overflow buy-sell-input" style={{width: "40px"}}>
+                                <ExchangeInput value={accept.least} onChange={this.changeAcceptLeast.bind(this, accept)} placeholder="0" />
+                            </div>
+                            <div className="grid-block no-margin no-overflow buy-sell-box" style={{width: "20px"}}>
+                                <AssetName dataPlace="right" name={accept.symbol} />
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div className="grid-block no-padding buy-sell-row" style={{margin: 0}}>
+                            <div className="grid-block no-margin no-overflow buy-sell-input" style={{width: "40px"}}>
+                                <ExchangeInput value={accept.most} onChange={this.changeAcceptMost.bind(this, accept)} placeholder="0" />
+                            </div>
+                            <div className="grid-block no-margin no-overflow buy-sell-box" style={{width: "20px"}}>
+                                <AssetName dataPlace="right" name={accept.symbol} />
+                            </div>
+                        </div>
+                    </td>
+                    <td><button className="button outline" onClick={this.removeAccept.bind(this, accept.id)}><Translate content="presale.delete"/></button></td>
+                </tr>
+            );
+        });
+        return accepts_part;
     }
 
     _renderAssetOfTop() {
         let asset_id = this.state.accepts.length === 1 ? this.state.accepts[0].asset_id : this.props.asset.get("id");
         this.state.asset_of_top = asset_id;
         return (
-          <table className="table">
-            <thead>
-            <th><Translate content="presale.mintotal"/></th>
-            <th><Translate content="presale.maxtotal"/></th>
-            </thead>
-            <tbody>
-            <tr>
-              <td>
-                <AmountSelector
-                  style={{width: "100%"}}
-                  amount={this.state.soft_top}
-                  onChange={this.onSoftTopChanged.bind(this)}
-                  asset={asset_id}
-                  assets={[asset_id]}
-                  placeholder="0.00"
-                />
-              </td>
-              <td>
-                <AmountSelector
-                  amount={this.state.hard_top}
-                  onChange={this.onHardTopChanged.bind(this)}
-                  asset={asset_id}
-                  assets={[asset_id]}
-                  placeholder="0.00"
-                />
-              </td>
-            </tr>
-            </tbody>
-          </table>
+            <table className="table">
+                <thead>
+                <th><Translate content="presale.mintotal"/></th>
+                <th><Translate content="presale.maxtotal"/></th>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <AmountSelector
+                            style={{width: "100%"}}
+                            amount={this.state.soft_top}
+                            onChange={this.onSoftTopChanged.bind(this)}
+                            asset={asset_id}
+                            assets={[asset_id]}
+                            placeholder="0.00"
+                        />
+                    </td>
+                    <td>
+                        <AmountSelector
+                            amount={this.state.hard_top}
+                            onChange={this.onHardTopChanged.bind(this)}
+                            asset={asset_id}
+                            assets={[asset_id]}
+                            placeholder="0.00"
+                        />
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         );
     }
 
@@ -441,29 +441,29 @@ class AccountPresaleCreate extends React.Component {
                     </div>
 
                     <div>
-                      <select style={{width: "30%", display: "inline-block", marginRight: "30px", height: "40px"}} value={this.state.accept_id} onChange={this.supportChange.bind(this)}>
-                        {supports}
-                      </select>
-                      <button className="button outline" style={{display: "inline-block"}} onClick={this.addAccept.bind(this)}><Translate content="presale.add_accept"/></button>
-                      {this.state.accepts.length ?
-                        <table className="table">
-                          <thead>
-                          <tr>
-                            <th><Translate content="explorer.assets.title"/></th>
-                            <th><Translate content="presale.total"/></th>
-                            <th><Translate content="presale.perprice"/></th>
-                            <th><Translate content="presale.minbuy"/></th>
-                            <th><Translate content="presale.maxbuy"/></th>
-                            <th></th>
-                          </tr>
-                          </thead>
-                          <tbody>
-                          {this.renderAccepts()}
-                          </tbody>
-                        </table>
-                        :
-                        null
-                      }
+                        <select style={{width: "30%", display: "inline-block", marginRight: "30px", height: "40px"}} value={this.state.accept_id} onChange={this.supportChange.bind(this)}>
+                            {supports}
+                        </select>
+                        <button className="button outline" style={{display: "inline-block"}} onClick={this.addAccept.bind(this)}><Translate content="presale.add_accept"/></button>
+                        {this.state.accepts.length ?
+                            <table className="table">
+                                <thead>
+                                <tr>
+                                    <th><Translate content="explorer.assets.title"/></th>
+                                    <th><Translate content="presale.total"/></th>
+                                    <th><Translate content="presale.perprice"/></th>
+                                    <th><Translate content="presale.minbuy"/></th>
+                                    <th><Translate content="presale.maxbuy"/></th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {this.renderAccepts()}
+                                </tbody>
+                            </table>
+                            :
+                            null
+                        }
                     </div>
 
                     {this._renderAssetOfTop()}
